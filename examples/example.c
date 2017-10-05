@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv) 
 {
-    unsigned int j;
+    unsigned int i;
     redisContext *ctx;
     redisReply *reply;
     
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
     }
 
     /* 
-    *   PING server 
+    *   PING server
     */
     reply = redisCommand(ctx,"PING");
     printf("PING: %s\n", reply->str);
@@ -79,11 +79,11 @@ int main(int argc, char **argv)
     */
     reply = redisCommand(ctx,"DEL mylist");
     freeReplyObject(reply);
-    for(j = 0; j < 10; j++) 
+    for(i = 0; i < 10; i++) 
     {
         char buf[64];
 
-        snprintf(buf,64,"%u",j);
+        snprintf(buf,64,"%u",i);
         reply = redisCommand(ctx,"LPUSH mylist element-%s", buf);
         freeReplyObject(reply);
     }
@@ -94,9 +94,9 @@ int main(int argc, char **argv)
     reply = redisCommand(ctx,"LRANGE mylist 0 -1");
     if(reply->type == REDIS_REPLY_ARRAY) 
     {
-        for(j = 0; j < reply->elements; j++) 
+        for(i = 0; i < reply->elements; i++) 
         {
-            printf("%u) %s\n", j, reply->element[j]->str);
+            printf("%u) %s\n", i, reply->element[i]->str);
         }
     }
     freeReplyObject(reply);
