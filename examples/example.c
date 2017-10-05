@@ -4,7 +4,8 @@
 
 #include <hiredis.h>
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) 
+{
     unsigned int j;
     redisContext *c;
     redisReply *reply;
@@ -13,11 +14,15 @@ int main(int argc, char **argv) {
 
     struct timeval timeout = { 1, 500000 }; // 1.5 seconds
     c = redisConnectWithTimeout(hostname, port, timeout);
-    if (c == NULL || c->err) {
-        if (c) {
+    if(c == NULL || c->err) 
+    {
+        if (c) 
+        {
             printf("Connection error: %s\n", c->errstr);
             redisFree(c);
-        } else {
+        } 
+        else 
+        {
             printf("Connection error: can't allocate redis context\n");
         }
         exit(1);
@@ -54,7 +59,8 @@ int main(int argc, char **argv) {
     /* Create a list of numbers, from 0 to 9 */
     reply = redisCommand(c,"DEL mylist");
     freeReplyObject(reply);
-    for (j = 0; j < 10; j++) {
+    for(j = 0; j < 10; j++) 
+    {
         char buf[64];
 
         snprintf(buf,64,"%u",j);
@@ -64,8 +70,10 @@ int main(int argc, char **argv) {
 
     /* Let's check what we have inside the list */
     reply = redisCommand(c,"LRANGE mylist 0 -1");
-    if (reply->type == REDIS_REPLY_ARRAY) {
-        for (j = 0; j < reply->elements; j++) {
+    if(reply->type == REDIS_REPLY_ARRAY) 
+    {
+        for(j = 0; j < reply->elements; j++) 
+        {
             printf("%u) %s\n", j, reply->element[j]->str);
         }
     }
