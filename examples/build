@@ -17,8 +17,15 @@ compile_all_implicitly()
 	done
 }
 
-compile_all_implicitly $*
+# compile_all_implicitly $*
 
+compile_explicitly()
+{
+    echo compiling example.c file ...
+    gcc -o example example.c ${CFLAGS}
+}
+
+compile_explicitly 
 
 #######################################################
 ## $1, $2,...: The parameters given to the script

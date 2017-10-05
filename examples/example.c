@@ -49,12 +49,16 @@ int main(int argc, char **argv)
     printf("SET: %s\n", reply->str);
     freeReplyObject(reply);
 
-    /* Set a key using binary safe API */
+    /* 
+    *   Set a key using binary safe API 
+    */
     reply = redisCommand(ctx,"SET %b %b", "bar", (size_t) 3, "hello", (size_t) 5);
     printf("SET (binary API): %s\n", reply->str);
     freeReplyObject(reply);
 
-    /* Try a GET and two INCR */
+    /* 
+    *   Try a GET and two INCR 
+    */
     reply = redisCommand(ctx,"GET foo");
     printf("GET foo: %s\n", reply->str);
     freeReplyObject(reply);
@@ -62,12 +66,17 @@ int main(int argc, char **argv)
     reply = redisCommand(ctx,"INCR counter");
     printf("INCR counter: %lld\n", reply->integer);
     freeReplyObject(reply);
-    /* again ... */
+    
+    /* 
+    *   again ... 
+    */
     reply = redisCommand(ctx,"INCR counter");
     printf("INCR counter: %lld\n", reply->integer);
     freeReplyObject(reply);
 
-    /* Create a list of numbers, from 0 to 9 */
+    /* 
+    *   Create a list of numbers, from 0 to 9 
+    */
     reply = redisCommand(ctx,"DEL mylist");
     freeReplyObject(reply);
     for(j = 0; j < 10; j++) 
@@ -79,7 +88,9 @@ int main(int argc, char **argv)
         freeReplyObject(reply);
     }
 
-    /* Let's check what we have inside the list */
+    /* 
+    *   Let's check what we have inside the list 
+    */
     reply = redisCommand(ctx,"LRANGE mylist 0 -1");
     if(reply->type == REDIS_REPLY_ARRAY) 
     {
@@ -90,7 +101,9 @@ int main(int argc, char **argv)
     }
     freeReplyObject(reply);
 
-    /* Disconnects and frees the context */
+    /* 
+    *   Disconnects and frees the context 
+    */
     redisFree(ctx);
 
     return 0;
